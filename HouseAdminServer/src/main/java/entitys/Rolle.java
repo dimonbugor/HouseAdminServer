@@ -28,13 +28,14 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author anekr
  */
 @Entity
-@Table(name = "category_table")
+@Table(name = "rolle_table")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Category.findAll", query = "SELECT c FROM Category c")
-    , @NamedQuery(name = "Category.findById", query = "SELECT c FROM Category c WHERE c.id = :id")
-    , @NamedQuery(name = "Category.findByCategory", query = "SELECT c FROM Category c WHERE c.category = :category")})
-public class Category implements Serializable {
+    @NamedQuery(name = "Rolle.findAll", query = "SELECT r FROM Rolle r")
+    , @NamedQuery(name = "Rolle.findById", query = "SELECT r FROM Rolle r WHERE r.id = :id")
+    , @NamedQuery(name = "Rolle.findBySeniority", query = "SELECT r FROM Rolle r WHERE r.seniority = :seniority")
+    , @NamedQuery(name = "Rolle.findByRolleTitle", query = "SELECT r FROM Rolle r WHERE r.rolleTitle = :rolleTitle")})
+public class Rolle implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -44,22 +45,27 @@ public class Category implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
+    @Column(name = "seniority")
+    private int seniority;
+    @Basic(optional = false)
+    @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "category")
-    private String category;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
-    private Collection<Supplier> supplierCollection;
+    @Column(name = "rolle_title")
+    private String rolleTitle;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "rolle")
+    private Collection<User> userCollection;
 
-    public Category() {
+    public Rolle() {
     }
 
-    public Category(Integer id) {
+    public Rolle(Integer id) {
         this.id = id;
     }
 
-    public Category(Integer id, String category) {
+    public Rolle(Integer id, int seniority, String rolleTitle) {
         this.id = id;
-        this.category = category;
+        this.seniority = seniority;
+        this.rolleTitle = rolleTitle;
     }
 
     public Integer getId() {
@@ -70,21 +76,29 @@ public class Category implements Serializable {
         this.id = id;
     }
 
-    public String getCategory() {
-        return category;
+    public int getSeniority() {
+        return seniority;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setSeniority(int seniority) {
+        this.seniority = seniority;
+    }
+
+    public String getRolleTitle() {
+        return rolleTitle;
+    }
+
+    public void setRolleTitle(String rolleTitle) {
+        this.rolleTitle = rolleTitle;
     }
 
     @XmlTransient
-    public Collection<Supplier> getSupplierCollection() {
-        return supplierCollection;
+    public Collection<User> getUserCollection() {
+        return userCollection;
     }
 
-    public void setSupplierCollection(Collection<Supplier> supplierCollection) {
-        this.supplierCollection = supplierCollection;
+    public void setUserCollection(Collection<User> userCollection) {
+        this.userCollection = userCollection;
     }
 
     @Override
@@ -97,10 +111,10 @@ public class Category implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Category)) {
+        if (!(object instanceof Rolle)) {
             return false;
         }
-        Category other = (Category) object;
+        Rolle other = (Rolle) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -109,7 +123,7 @@ public class Category implements Serializable {
 
     @Override
     public String toString() {
-        return "entitys.Category[ id=" + id + " ]";
+        return "entitys.Rolle[ id=" + id + " ]";
     }
     
 }

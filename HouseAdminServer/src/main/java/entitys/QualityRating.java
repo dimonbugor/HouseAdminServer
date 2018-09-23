@@ -19,18 +19,21 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author anekr
  */
 @Entity
-@Table(name = "rating_table")
+@Table(name = "quality_rating_table")
+@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Rating.findAll", query = "SELECT r FROM Rating r")
-    , @NamedQuery(name = "Rating.findById", query = "SELECT r FROM Rating r WHERE r.id = :id")
-    , @NamedQuery(name = "Rating.findByRating", query = "SELECT r FROM Rating r WHERE r.rating = :rating")})
-public class Rating implements Serializable {
+    @NamedQuery(name = "QualityRating.findAll", query = "SELECT q FROM QualityRating q")
+    , @NamedQuery(name = "QualityRating.findById", query = "SELECT q FROM QualityRating q WHERE q.id = :id")
+    , @NamedQuery(name = "QualityRating.findByRating", query = "SELECT q FROM QualityRating q WHERE q.rating = :rating")})
+public class QualityRating implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -42,19 +45,17 @@ public class Rating implements Serializable {
     @NotNull
     @Column(name = "rating")
     private int rating;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "availability")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "qualityRating")
     private Collection<Supplier> supplierCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "quality")
-    private Collection<Supplier> supplierCollection1;
 
-    public Rating() {
+    public QualityRating() {
     }
 
-    public Rating(Integer id) {
+    public QualityRating(Integer id) {
         this.id = id;
     }
 
-    public Rating(Integer id, int rating) {
+    public QualityRating(Integer id, int rating) {
         this.id = id;
         this.rating = rating;
     }
@@ -75,20 +76,13 @@ public class Rating implements Serializable {
         this.rating = rating;
     }
 
+    @XmlTransient
     public Collection<Supplier> getSupplierCollection() {
         return supplierCollection;
     }
 
     public void setSupplierCollection(Collection<Supplier> supplierCollection) {
         this.supplierCollection = supplierCollection;
-    }
-
-    public Collection<Supplier> getSupplierCollection1() {
-        return supplierCollection1;
-    }
-
-    public void setSupplierCollection1(Collection<Supplier> supplierCollection1) {
-        this.supplierCollection1 = supplierCollection1;
     }
 
     @Override
@@ -101,10 +95,10 @@ public class Rating implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Rating)) {
+        if (!(object instanceof QualityRating)) {
             return false;
         }
-        Rating other = (Rating) object;
+        QualityRating other = (QualityRating) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -113,7 +107,7 @@ public class Rating implements Serializable {
 
     @Override
     public String toString() {
-        return "entitys.Rating[ id=" + id + " ]";
+        return "entitys.QualityRating[ id=" + id + " ]";
     }
     
 }

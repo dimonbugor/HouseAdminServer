@@ -7,6 +7,12 @@
     <class>entitys.Category</class>
     <class>entitys.Tenant</class>
     <class>entitys.HouseAdmin</class>
+    <class>entitys.User</class>
+    <class>entitys.AvailablityRating</class>
+    <class>entitys.Rolle</class>
+    <class>entitys.QualityRating</class>
+    <class>entitys.Apartment</class>
+    <class>entitys.Payments</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://127.0.0.1:3306/house_admin_db?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC"/>

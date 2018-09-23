@@ -19,7 +19,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -28,13 +27,13 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author anekr
  */
 @Entity
-@Table(name = "category_table")
+@Table(name = "availablity_rating_table")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Category.findAll", query = "SELECT c FROM Category c")
-    , @NamedQuery(name = "Category.findById", query = "SELECT c FROM Category c WHERE c.id = :id")
-    , @NamedQuery(name = "Category.findByCategory", query = "SELECT c FROM Category c WHERE c.category = :category")})
-public class Category implements Serializable {
+    @NamedQuery(name = "AvailablityRating.findAll", query = "SELECT a FROM AvailablityRating a")
+    , @NamedQuery(name = "AvailablityRating.findById", query = "SELECT a FROM AvailablityRating a WHERE a.id = :id")
+    , @NamedQuery(name = "AvailablityRating.findByRating", query = "SELECT a FROM AvailablityRating a WHERE a.rating = :rating")})
+public class AvailablityRating implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -44,22 +43,21 @@ public class Category implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
-    @Column(name = "category")
-    private String category;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
+    @Column(name = "rating")
+    private int rating;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "availablityRating")
     private Collection<Supplier> supplierCollection;
 
-    public Category() {
+    public AvailablityRating() {
     }
 
-    public Category(Integer id) {
+    public AvailablityRating(Integer id) {
         this.id = id;
     }
 
-    public Category(Integer id, String category) {
+    public AvailablityRating(Integer id, int rating) {
         this.id = id;
-        this.category = category;
+        this.rating = rating;
     }
 
     public Integer getId() {
@@ -70,12 +68,12 @@ public class Category implements Serializable {
         this.id = id;
     }
 
-    public String getCategory() {
-        return category;
+    public int getRating() {
+        return rating;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setRating(int rating) {
+        this.rating = rating;
     }
 
     @XmlTransient
@@ -97,10 +95,10 @@ public class Category implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Category)) {
+        if (!(object instanceof AvailablityRating)) {
             return false;
         }
-        Category other = (Category) object;
+        AvailablityRating other = (AvailablityRating) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -109,7 +107,7 @@ public class Category implements Serializable {
 
     @Override
     public String toString() {
-        return "entitys.Category[ id=" + id + " ]";
+        return "entitys.AvailablityRating[ id=" + id + " ]";
     }
     
 }

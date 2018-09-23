@@ -6,17 +6,22 @@
 package entitys;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -24,20 +29,21 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "supplier_table")
+@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Supplier.findAll", query = "SELECT s FROM Supplier s")
-    , @NamedQuery(name = "Supplier.findById", query = "SELECT s FROM Supplier s WHERE s.id = :id")
+    , @NamedQuery(name = "Supplier.findById", query = "SELECT s FROM Supplier s WHERE s.supplierPK.id = :id")
     , @NamedQuery(name = "Supplier.findByName", query = "SELECT s FROM Supplier s WHERE s.name = :name")
     , @NamedQuery(name = "Supplier.findByPrice", query = "SELECT s FROM Supplier s WHERE s.price = :price")
-    , @NamedQuery(name = "Supplier.findByPhone", query = "SELECT s FROM Supplier s WHERE s.phone = :phone")})
+    , @NamedQuery(name = "Supplier.findByPhone", query = "SELECT s FROM Supplier s WHERE s.phone = :phone")
+    , @NamedQuery(name = "Supplier.findByCategoryTableId", query = "SELECT s FROM Supplier s WHERE s.supplierPK.categoryTableId = :categoryTableId")
+    , @NamedQuery(name = "Supplier.findByAvailablityRatingTableId", query = "SELECT s FROM Supplier s WHERE s.supplierPK.availablityRatingTableId = :availablityRatingTableId")
+    , @NamedQuery(name = "Supplier.findByQualityRatingTableId", query = "SELECT s FROM Supplier s WHERE s.supplierPK.qualityRatingTableId = :qualityRatingTableId")})
 public class Supplier implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "id")
-    private Integer id;
+    @EmbeddedId
+    protected SupplierPK supplierPK;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 150)
@@ -51,35 +57,41 @@ public class Supplier implements Serializable {
     @Size(max = 45)
     @Column(name = "phone")
     private String phone;
-    @JoinColumn(name = "category", referencedColumnName = "category")
+    @JoinColumn(name = "availablity_rating_table_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private AvailablityRating availablityRating;
+    @JoinColumn(name = "category_table_id", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Category category;
-    @JoinColumn(name = "availability", referencedColumnName = "rating")
+    @JoinColumn(name = "quality_rating_table_id", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
-    private Rating availability;
-    @JoinColumn(name = "quality", referencedColumnName = "rating")
-    @ManyToOne(optional = false)
-    private Rating quality;
+    private QualityRating qualityRating;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "supplier")
+    private Collection<Payments> paymentsCollection;
 
     public Supplier() {
     }
 
-    public Supplier(Integer id) {
-        this.id = id;
+    public Supplier(SupplierPK supplierPK) {
+        this.supplierPK = supplierPK;
     }
 
-    public Supplier(Integer id, String name, float price) {
-        this.id = id;
+    public Supplier(SupplierPK supplierPK, String name, float price) {
+        this.supplierPK = supplierPK;
         this.name = name;
         this.price = price;
     }
 
-    public Integer getId() {
-        return id;
+    public Supplier(int id, int categoryTableId, int availablityRatingTableId, int qualityRatingTableId) {
+        this.supplierPK = new SupplierPK(id, categoryTableId, availablityRatingTableId, qualityRatingTableId);
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public SupplierPK getSupplierPK() {
+        return supplierPK;
+    }
+
+    public void setSupplierPK(SupplierPK supplierPK) {
+        this.supplierPK = supplierPK;
     }
 
     public String getName() {
@@ -106,6 +118,14 @@ public class Supplier implements Serializable {
         this.phone = phone;
     }
 
+    public AvailablityRating getAvailablityRating() {
+        return availablityRating;
+    }
+
+    public void setAvailablityRating(AvailablityRating availablityRating) {
+        this.availablityRating = availablityRating;
+    }
+
     public Category getCategory() {
         return category;
     }
@@ -114,26 +134,27 @@ public class Supplier implements Serializable {
         this.category = category;
     }
 
-    public Rating getAvailability() {
-        return availability;
+    public QualityRating getQualityRating() {
+        return qualityRating;
     }
 
-    public void setAvailability(Rating availability) {
-        this.availability = availability;
+    public void setQualityRating(QualityRating qualityRating) {
+        this.qualityRating = qualityRating;
     }
 
-    public Rating getQuality() {
-        return quality;
+    @XmlTransient
+    public Collection<Payments> getPaymentsCollection() {
+        return paymentsCollection;
     }
 
-    public void setQuality(Rating quality) {
-        this.quality = quality;
+    public void setPaymentsCollection(Collection<Payments> paymentsCollection) {
+        this.paymentsCollection = paymentsCollection;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (supplierPK != null ? supplierPK.hashCode() : 0);
         return hash;
     }
 
@@ -144,7 +165,7 @@ public class Supplier implements Serializable {
             return false;
         }
         Supplier other = (Supplier) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if ((this.supplierPK == null && other.supplierPK != null) || (this.supplierPK != null && !this.supplierPK.equals(other.supplierPK))) {
             return false;
         }
         return true;
@@ -152,7 +173,7 @@ public class Supplier implements Serializable {
 
     @Override
     public String toString() {
-        return "entitys.Supplier[ id=" + id + " ]";
+        return "entitys.Supplier[ supplierPK=" + supplierPK + " ]";
     }
     
 }

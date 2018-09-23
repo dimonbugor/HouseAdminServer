@@ -19,7 +19,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -28,13 +27,13 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author anekr
  */
 @Entity
-@Table(name = "category_table")
+@Table(name = "apartment_table")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Category.findAll", query = "SELECT c FROM Category c")
-    , @NamedQuery(name = "Category.findById", query = "SELECT c FROM Category c WHERE c.id = :id")
-    , @NamedQuery(name = "Category.findByCategory", query = "SELECT c FROM Category c WHERE c.category = :category")})
-public class Category implements Serializable {
+    @NamedQuery(name = "Apartment.findAll", query = "SELECT a FROM Apartment a")
+    , @NamedQuery(name = "Apartment.findById", query = "SELECT a FROM Apartment a WHERE a.id = :id")
+    , @NamedQuery(name = "Apartment.findByApartmentNumber", query = "SELECT a FROM Apartment a WHERE a.apartmentNumber = :apartmentNumber")})
+public class Apartment implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -44,22 +43,23 @@ public class Category implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
-    @Column(name = "category")
-    private String category;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
-    private Collection<Supplier> supplierCollection;
+    @Column(name = "apartment_number")
+    private int apartmentNumber;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "apartment")
+    private Collection<User> userCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "apartment")
+    private Collection<Payments> paymentsCollection;
 
-    public Category() {
+    public Apartment() {
     }
 
-    public Category(Integer id) {
+    public Apartment(Integer id) {
         this.id = id;
     }
 
-    public Category(Integer id, String category) {
+    public Apartment(Integer id, int apartmentNumber) {
         this.id = id;
-        this.category = category;
+        this.apartmentNumber = apartmentNumber;
     }
 
     public Integer getId() {
@@ -70,21 +70,30 @@ public class Category implements Serializable {
         this.id = id;
     }
 
-    public String getCategory() {
-        return category;
+    public int getApartmentNumber() {
+        return apartmentNumber;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setApartmentNumber(int apartmentNumber) {
+        this.apartmentNumber = apartmentNumber;
     }
 
     @XmlTransient
-    public Collection<Supplier> getSupplierCollection() {
-        return supplierCollection;
+    public Collection<User> getUserCollection() {
+        return userCollection;
     }
 
-    public void setSupplierCollection(Collection<Supplier> supplierCollection) {
-        this.supplierCollection = supplierCollection;
+    public void setUserCollection(Collection<User> userCollection) {
+        this.userCollection = userCollection;
+    }
+
+    @XmlTransient
+    public Collection<Payments> getPaymentsCollection() {
+        return paymentsCollection;
+    }
+
+    public void setPaymentsCollection(Collection<Payments> paymentsCollection) {
+        this.paymentsCollection = paymentsCollection;
     }
 
     @Override
@@ -97,10 +106,10 @@ public class Category implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Category)) {
+        if (!(object instanceof Apartment)) {
             return false;
         }
-        Category other = (Category) object;
+        Apartment other = (Apartment) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -109,7 +118,7 @@ public class Category implements Serializable {
 
     @Override
     public String toString() {
-        return "entitys.Category[ id=" + id + " ]";
+        return "entitys.Apartment[ id=" + id + " ]";
     }
     
 }
