@@ -11,6 +11,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -45,9 +46,9 @@ public class Apartment implements Serializable {
     @NotNull
     @Column(name = "apartment_number")
     private int apartmentNumber;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "apartment")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "apartment", fetch = FetchType.EAGER)
     private Collection<User> userCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "apartment")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "apartment", fetch = FetchType.EAGER)
     private Collection<Payments> paymentsCollection;
 
     public Apartment() {

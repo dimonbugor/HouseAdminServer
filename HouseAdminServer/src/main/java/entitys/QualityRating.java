@@ -11,6 +11,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -45,7 +46,7 @@ public class QualityRating implements Serializable {
     @NotNull
     @Column(name = "rating")
     private int rating;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "qualityRating")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "qualityRating", fetch = FetchType.EAGER)
     private Collection<Supplier> supplierCollection;
 
     public QualityRating() {

@@ -40,9 +40,12 @@ made subject to such option by the copyright holder.
 Contributor(s):
 -->
 <hibernate-mapping>
-  <class name="entitys.Category" table="category_table"/>
-  <class name="entitys.HouseAdmin" table="house_admin_table"/>
-  <class name="entitys.Rating" table="rating_table"/>
-  <class name="entitys.Supplier" table="supplier_table"/>
-  <class name="entitys.Tenant" table="tenant_table"/>
+    <class name="entitys.User" table="user_table"/>
+    <class name="entitys.Supplier" table="supplier_table"/>
+    <class name="entitys.Rolle" table="rolle_table"/>
+    <class name="entitys.QualityRating" table="quality_rating_table"/>
+    <class name="entitys.Patments" table="patments_table"/>
+    <class name="entitys.Category" table="category_table"/>
+    <class name="entitys.AvailablityRating" table="availablity_rating_table"/>
+    <class name="entitys.Apartment" table="apartment_table"/>
 </hibernate-mapping>

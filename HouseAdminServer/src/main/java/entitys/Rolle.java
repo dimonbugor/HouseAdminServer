@@ -11,6 +11,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -52,7 +53,7 @@ public class Rolle implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "rolle_title")
     private String rolleTitle;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "rolle")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "rolle", fetch = FetchType.EAGER)
     private Collection<User> userCollection;
 
     public Rolle() {

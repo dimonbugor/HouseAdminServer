@@ -12,6 +12,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -58,15 +59,15 @@ public class Supplier implements Serializable {
     @Column(name = "phone")
     private String phone;
     @JoinColumn(name = "availablity_rating_table_id", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private AvailablityRating availablityRating;
     @JoinColumn(name = "category_table_id", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Category category;
     @JoinColumn(name = "quality_rating_table_id", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private QualityRating qualityRating;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "supplier")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "supplier", fetch = FetchType.EAGER)
     private Collection<Payments> paymentsCollection;
 
     public Supplier() {

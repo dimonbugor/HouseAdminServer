@@ -11,6 +11,7 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
@@ -54,14 +55,14 @@ public class Payments implements Serializable {
     @Column(name = "amount_per_month")
     private float amountPerMonth;
     @JoinColumn(name = "apartment_table_id", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Apartment apartment;
     @JoinColumns({
         @JoinColumn(name = "supplier_table_id", referencedColumnName = "id", insertable = false, updatable = false)
         , @JoinColumn(name = "supplier_table_category_table_id", referencedColumnName = "category_table_id", insertable = false, updatable = false)
         , @JoinColumn(name = "supplier_table_availablity_rating_table_id", referencedColumnName = "availablity_rating_table_id", insertable = false, updatable = false)
         , @JoinColumn(name = "supplier_table_quality_rating_table_id", referencedColumnName = "quality_rating_table_id", insertable = false, updatable = false)})
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Supplier supplier;
 
     public Payments() {

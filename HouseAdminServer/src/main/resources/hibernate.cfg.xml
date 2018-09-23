@@ -47,7 +47,17 @@ Contributor(s):
     <property name="hibernate.connection.username">root</property>
     <property name="hibernate.connection.password">root123456</property>
     <property name="hibernate.hbm2ddl.auto">update</property>
-    <mapping resource="../java/hibernate/hibernate.hbm.xml"/>
-    <mapping/>
+    <property name="show_sql">true</property>
+    <!--<mapping resource="../java/hibernate/hibernate.hbm.xml"/>
+    <mapping/>-->
+    <mapping class="entitys.User"/>
+    <mapping class="entitys.Supplier"/>
+    <mapping class="entitys.Rolle"/>
+    <mapping class="entitys.QualityRating"/>
+    <mapping class="entitys.Payments"/>
+    <mapping class="entitys.Category"/>
+    <mapping class="entitys.AvailablityRating"/>
+    <mapping class="entitys.Apartment"/>
+    
   </session-factory>
 </hibernate-configuration>
