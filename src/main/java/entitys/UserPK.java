@@ -9,6 +9,8 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -20,6 +22,7 @@ public class UserPK implements Serializable {
 
     @Basic(optional = false)
     @Column(name = "id")
+    @GeneratedValue(strategy = IDENTITY)
     private int id;
     @Basic(optional = false)
     @NotNull
