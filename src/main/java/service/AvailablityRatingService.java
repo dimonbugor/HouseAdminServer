@@ -25,23 +25,18 @@ public class AvailablityRatingService extends Service<AvailablityRating>{
     }
 
     @Override
-    public void deleteAll() {
-        super.deleteAll(); //To change body of generated methods, choose Tools | Templates.
+    public void delete(Class<AvailablityRating> type, Integer id) {
+        super.delete(type, id); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void delete(Integer id) {
-        super.delete(id); //To change body of generated methods, choose Tools | Templates.
+    public List<AvailablityRating> findAll(Class<AvailablityRating> type) {
+        return super.findAll(type); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<AvailablityRating> findAll() {
-        return super.findAll(); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public AvailablityRating findById(Integer id) {
-        return super.findById(id); //To change body of generated methods, choose Tools | Templates.
+    public AvailablityRating findById(Class<AvailablityRating> type, Integer id) {
+        return super.findById(type, id); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -53,6 +48,6 @@ public class AvailablityRatingService extends Service<AvailablityRating>{
     public void add(AvailablityRating entity) {
         super.add(entity); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     
 }

@@ -15,23 +15,18 @@ import java.util.List;
 public class QualityRatingDAO extends DAO<QualityRating>{
 
     @Override
-    public void deleteAll() {
-        super.deleteAll(); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public void delete(QualityRating entity) {
         super.delete(entity); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<QualityRating> findAll() {
-        return super.findAll(); //To change body of generated methods, choose Tools | Templates.
+    public List<QualityRating> findAll(Class<QualityRating> type) {
+        return super.findAll(type); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public QualityRating findById(int id) {
-        return super.findById(id); //To change body of generated methods, choose Tools | Templates.
+    public QualityRating findById(Class<QualityRating> type, int id) {
+        return super.findById(type, id); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -43,5 +38,7 @@ public class QualityRatingDAO extends DAO<QualityRating>{
     public void add(QualityRating entity) {
         super.add(entity); //To change body of generated methods, choose Tools | Templates.
     }
+
+    
     
 }

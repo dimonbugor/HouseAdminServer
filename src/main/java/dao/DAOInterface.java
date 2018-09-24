@@ -15,15 +15,13 @@ import java.util.List;
 public interface DAOInterface<T> {
     
     //создать
-    public void add(T entity);
+    public void add(final T entity);
     //обновить
-    public void update(T entity);
+    public void update(final T entity);
     //найти по id
-    public T findById(int id);
+    public T findById(final Class<T> type, final int id);
     //найти все
-    public List<T> findAll();
+    public List<T> findAll(final Class <T> type);
     //удалить
-    public void delete(T entity);
-    //удалить все
-    public void deleteAll();
+    public void delete(final T entity);
 }

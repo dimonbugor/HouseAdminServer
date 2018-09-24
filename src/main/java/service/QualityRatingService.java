@@ -25,23 +25,18 @@ public class QualityRatingService extends Service<QualityRating>{
     }
 
     @Override
-    public void deleteAll() {
-        super.deleteAll(); //To change body of generated methods, choose Tools | Templates.
+    public void delete(Class<QualityRating> type, Integer id) {
+        super.delete(type, id); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void delete(Integer id) {
-        super.delete(id); //To change body of generated methods, choose Tools | Templates.
+    public List<QualityRating> findAll(Class<QualityRating> type) {
+        return super.findAll(type); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<QualityRating> findAll() {
-        return super.findAll(); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public QualityRating findById(Integer id) {
-        return super.findById(id); //To change body of generated methods, choose Tools | Templates.
+    public QualityRating findById(Class<QualityRating> type, Integer id) {
+        return super.findById(type, id); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -53,6 +48,6 @@ public class QualityRatingService extends Service<QualityRating>{
     public void add(QualityRating entity) {
         super.add(entity); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     
 }

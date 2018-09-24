@@ -18,7 +18,6 @@ public class Service<T> {
         dao.closeSessionwithTransaction();
     }
 
-    ;
     //обновить
     public void update(T entity) {
         dao.openSessionwithTransaction();
@@ -27,33 +26,26 @@ public class Service<T> {
     }
 
     //найти по id
-    public T findById(Integer id) {
+    public T findById(Class<T> type, Integer id) {
         dao.openSession();
-        T t = (T) dao.findById(id);
+        T t = (T) dao.findById(type, id);
         dao.closeSession();
         return t;
     }
 
     //найти все
-    public List<T> findAll(){
+    public List<T> findAll(Class<T> type){
         dao.openSession();
-        List<T> tList = dao.findAll();
+        List<T> tList = dao.findAll(type);
         dao.closeSession();
         return tList;
     }
 
     //удалить
-    public void delete(Integer id) {
+    public void delete(Class<T> type, Integer id) {
         dao.openSessionwithTransaction();
-        T t = (T) dao.findById(id);
+        T t = (T) dao.findById(type, id);
         dao.delete(t);
-        dao.closeSessionwithTransaction();
-    }
-
-    //удалить все
-    public void deleteAll(){
-        dao.openSessionwithTransaction();
-        dao.deleteAll();
         dao.closeSessionwithTransaction();
     }
     

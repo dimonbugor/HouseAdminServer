@@ -14,23 +14,13 @@ import java.util.List;
 public class ApartmentDAO extends DAO<Apartment>{
 
     @Override
-    public void deleteAll() {
-        super.deleteAll(); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public void delete(Apartment entity) {
         super.delete(entity); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<Apartment> findAll() {
-        return super.findAll(); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Apartment findById(int id) {
-        return super.findById(id); //To change body of generated methods, choose Tools | Templates.
+    public Apartment findById(Class<Apartment> type, int id) {
+        return super.findById(type, id); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -42,6 +32,10 @@ public class ApartmentDAO extends DAO<Apartment>{
     public void add(Apartment entity) {
         super.add(entity); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    
+
+    @Override
+    public List<Apartment> findAll(Class<Apartment> type) {
+        return super.findAll(type); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

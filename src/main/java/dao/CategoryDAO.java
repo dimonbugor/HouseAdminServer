@@ -15,23 +15,18 @@ import java.util.List;
 public class CategoryDAO extends DAO<Category>{
 
     @Override
-    public void deleteAll() {
-        super.deleteAll(); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public void delete(Category entity) {
         super.delete(entity); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<Category> findAll() {
-        return super.findAll(); //To change body of generated methods, choose Tools | Templates.
+    public List<Category> findAll(Class<Category> type) {
+        return super.findAll(type); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Category findById(int id) {
-        return super.findById(id); //To change body of generated methods, choose Tools | Templates.
+    public Category findById(Class<Category> type, int id) {
+        return super.findById(type, id); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -43,6 +38,6 @@ public class CategoryDAO extends DAO<Category>{
     public void add(Category entity) {
         super.add(entity); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    
+
+        
 }

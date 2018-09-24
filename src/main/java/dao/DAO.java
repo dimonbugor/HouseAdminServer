@@ -7,6 +7,7 @@ package dao;
 
 import hibernate.HibernateUtil;
 import java.util.List;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -65,38 +66,31 @@ public class DAO<T> implements DAOInterface<T>{
     }
 
     @Override
-    public void add(T entity) {
+    public void add(final T entity) {
         getSession().save(entity);
     }
 
     @Override
-    public void update(T entity) {
+    public void update(final T entity) {
         getSession().update(entity);
     }
 
     @Override
-    public T findById(int id) {
-        T t = (T) getSession().get(entity.getClass(), id);
+    public T findById(final Class<T> type, final int id) {
+        T t = (T) getSession().get(type, id);
         return t;
     }
 
     @Override
-    public List<T> findAll() {
-        String sql = "From " + entity.getClass().getSimpleName();
-        List<T> entitys = (List<T>) getSession().createQuery(sql).list();
-        return entitys;
+    public List<T> findAll(final Class<T> type) {
+        final Criteria crit = getSession().createCriteria(type);
+        //String sql = "From " + entity.getClass().getSimpleName();
+        //List<T> entitys = (List<T>) getSession().createQuery(sql).list();
+        return crit.list();
     }
 
     @Override
-    public void delete(T entity) {
+    public void delete(final T entity) {
         getSession().delete(entity);
-    }
-
-    @Override
-    public void deleteAll() {
-        List<T> entitys = findAll();
-        for(T t : entitys){
-            delete(t);
-        }
     }
 }
