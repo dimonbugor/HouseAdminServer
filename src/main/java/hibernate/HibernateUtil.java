@@ -5,6 +5,7 @@
  */
 package hibernate;
 
+import static java.lang.System.err;
 import org.hibernate.HibernateException;
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.SessionFactory;
@@ -28,15 +29,15 @@ public class HibernateUtil {
             // Create the SessionFactory from standard (hibernate.cfg.xml) 
             // config file.
 
-            sessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
-            /*Configuration configuration = new Configuration();
+            //sessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
+            Configuration configuration = new Configuration();
             configuration.configure("hibernate.cfg.xml");
 
             StandardServiceRegistryBuilder serviceBuilder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
-            sessionFactory = configuration.buildSessionFactory(serviceBuilder.build());*/
+            sessionFactory = configuration.buildSessionFactory(serviceBuilder.build());
         } catch (HibernateException ex) {
             // Log the exception. 
-            System.err.println("Initial SessionFactory creation failed." + ex);
+            err.println("Initial SessionFactory creation failed." + ex);
             throw new ExceptionInInitializerError(ex);
         }
     }

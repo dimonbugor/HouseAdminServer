@@ -11,10 +11,12 @@ import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
+import static javax.persistence.CascadeType.ALL;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import static javax.persistence.FetchType.EAGER;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -62,21 +64,21 @@ public class Supplier implements Serializable {
     private String phone;
     
     @JoinColumn(name = "availablity_rating_table_id", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = EAGER)
     @JsonManagedReference
     private AvailablityRating availablityRating;
     
     @JoinColumn(name = "category_table_id", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = EAGER)
     @JsonManagedReference
     private Category category;
     
     @JoinColumn(name = "quality_rating_table_id", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = EAGER)
     @JsonManagedReference
     private QualityRating qualityRating;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "supplier", fetch = FetchType.EAGER)
+    @OneToMany(cascade = ALL, mappedBy = "supplier", fetch = EAGER)
     @JsonBackReference
     private Collection<Payments> paymentsCollection;
 

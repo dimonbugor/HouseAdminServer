@@ -13,6 +13,7 @@ import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import static javax.persistence.FetchType.EAGER;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
@@ -21,6 +22,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import static javax.persistence.TemporalType.TIMESTAMP;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -49,7 +51,7 @@ public class Payments implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "month")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TIMESTAMP)
     private Date month;
     @Basic(optional = false)
     @NotNull
@@ -57,7 +59,7 @@ public class Payments implements Serializable {
     private float amountPerMonth;
     
     @JoinColumn(name = "apartment_table_id", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = EAGER)
     @JsonManagedReference
     private Apartment apartment;
     
@@ -66,7 +68,7 @@ public class Payments implements Serializable {
         , @JoinColumn(name = "supplier_table_category_table_id", referencedColumnName = "category_table_id", insertable = false, updatable = false)
         , @JoinColumn(name = "supplier_table_availablity_rating_table_id", referencedColumnName = "availablity_rating_table_id", insertable = false, updatable = false)
         , @JoinColumn(name = "supplier_table_quality_rating_table_id", referencedColumnName = "quality_rating_table_id", insertable = false, updatable = false)})
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = EAGER)
     @JsonManagedReference
     private Supplier supplier;
 

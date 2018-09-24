@@ -10,11 +10,14 @@ import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
+import static javax.persistence.CascadeType.ALL;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import static javax.persistence.FetchType.EAGER;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -39,7 +42,7 @@ public class Apartment implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
@@ -48,11 +51,11 @@ public class Apartment implements Serializable {
     @Column(name = "apartment_number")
     private int apartmentNumber;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "apartment", fetch = FetchType.EAGER)
+    @OneToMany(cascade = ALL, mappedBy = "apartment", fetch = EAGER)
     @JsonBackReference
     private Collection<User> userCollection;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "apartment", fetch = FetchType.EAGER)
+    @OneToMany(cascade = ALL, mappedBy = "apartment", fetch = EAGER)
     @JsonBackReference
     private Collection<Payments> paymentsCollection;
 

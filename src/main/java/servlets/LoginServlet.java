@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.UserDAO;
 import entitys.User;
 import hibernate.HibernateUtil;
+import static hibernate.HibernateUtil.getSessionFactory;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -85,7 +86,7 @@ public class LoginServlet extends HttpServlet {
 
         //UserService userService = new UserService(new UserDAO());
         //List<User> listUsers = userService.findAll();
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = getSessionFactory().openSession();
         Transaction tx = session.beginTransaction();
         Query query = session.getNamedQuery("User.findByEmail");
         query.setParameter("email", email);

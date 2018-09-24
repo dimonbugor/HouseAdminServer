@@ -10,11 +10,14 @@ import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
+import static javax.persistence.CascadeType.ALL;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import static javax.persistence.FetchType.EAGER;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -39,7 +42,7 @@ public class QualityRating implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
@@ -48,7 +51,7 @@ public class QualityRating implements Serializable {
     @Column(name = "rating")
     private int rating;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "qualityRating", fetch = FetchType.EAGER)
+    @OneToMany(cascade = ALL, mappedBy = "qualityRating", fetch = EAGER)
     @JsonBackReference
     private Collection<Supplier> supplierCollection;
 
