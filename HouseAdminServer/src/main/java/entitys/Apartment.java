@@ -5,6 +5,7 @@
  */
 package entitys;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -46,9 +47,13 @@ public class Apartment implements Serializable {
     @NotNull
     @Column(name = "apartment_number")
     private int apartmentNumber;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "apartment", fetch = FetchType.EAGER)
+    @JsonBackReference
     private Collection<User> userCollection;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "apartment", fetch = FetchType.EAGER)
+    @JsonBackReference
     private Collection<Payments> paymentsCollection;
 
     public Apartment() {

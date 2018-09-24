@@ -5,6 +5,7 @@
  */
 package entitys;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -53,7 +54,9 @@ public class Rolle implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "rolle_title")
     private String rolleTitle;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "rolle", fetch = FetchType.EAGER)
+    @JsonBackReference
     private Collection<User> userCollection;
 
     public Rolle() {

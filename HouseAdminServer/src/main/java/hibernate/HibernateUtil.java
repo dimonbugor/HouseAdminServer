@@ -28,12 +28,12 @@ public class HibernateUtil {
             // Create the SessionFactory from standard (hibernate.cfg.xml) 
             // config file.
 
-            //sessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
-            Configuration configuration = new Configuration();
+            sessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
+            /*Configuration configuration = new Configuration();
             configuration.configure("hibernate.cfg.xml");
 
             StandardServiceRegistryBuilder serviceBuilder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
-            sessionFactory = configuration.buildSessionFactory(serviceBuilder.build());
+            sessionFactory = configuration.buildSessionFactory(serviceBuilder.build());*/
         } catch (HibernateException ex) {
             // Log the exception. 
             System.err.println("Initial SessionFactory creation failed." + ex);

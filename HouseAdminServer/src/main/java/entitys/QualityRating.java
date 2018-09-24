@@ -5,6 +5,7 @@
  */
 package entitys;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -46,7 +47,9 @@ public class QualityRating implements Serializable {
     @NotNull
     @Column(name = "rating")
     private int rating;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "qualityRating", fetch = FetchType.EAGER)
+    @JsonBackReference
     private Collection<Supplier> supplierCollection;
 
     public QualityRating() {

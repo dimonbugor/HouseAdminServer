@@ -5,6 +5,8 @@
  */
 package entitys;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -58,16 +60,24 @@ public class Supplier implements Serializable {
     @Size(max = 45)
     @Column(name = "phone")
     private String phone;
+    
     @JoinColumn(name = "availablity_rating_table_id", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @JsonManagedReference
     private AvailablityRating availablityRating;
+    
     @JoinColumn(name = "category_table_id", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @JsonManagedReference
     private Category category;
+    
     @JoinColumn(name = "quality_rating_table_id", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @JsonManagedReference
     private QualityRating qualityRating;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "supplier", fetch = FetchType.EAGER)
+    @JsonBackReference
     private Collection<Payments> paymentsCollection;
 
     public Supplier() {

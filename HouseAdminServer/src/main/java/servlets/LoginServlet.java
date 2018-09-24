@@ -5,7 +5,7 @@
  */
 package servlets;
 
-import com.google.gson.Gson;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.UserDAO;
 import entitys.User;
 import hibernate.HibernateUtil;
@@ -43,7 +43,7 @@ public class LoginServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoginServlet</title>");            
+            out.println("<title>Servlet LoginServlet</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet LoginServlet at " + request.getContextPath() + "</h1>");
@@ -79,25 +79,45 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+
         //UserService userService = new UserService(new UserDAO());
         //List<User> listUsers = userService.findAll();
-        
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = session.beginTransaction();
-        Query query = session.getNamedQuery("User.findAll");
-        List<User> listUsers = query.list();
+        Query query = session.getNamedQuery("User.findByEmail");
+        query.setParameter("email", email);
+        User user;
+        user = (User) query.uniqueResult();
         tx.commit();
         session.close();
-                
-        Gson gson = new Gson();
-        String jsonListUsers = gson.toJson(listUsers);
         
-        response.setContentType("application/json;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            out.println(jsonListUsers);
+        if(user == null){
+            user = new User();
+            user.setEmail("false");
+            user.setPassword("false");
+            String jsonUsers = new ObjectMapper().writeValueAsString(user);
+            response.setContentType("application/json;charset=UTF-8");
+            try (PrintWriter out = response.getWriter()) {
+                out.println(jsonUsers);
+            }
+        } else if (user.getPassword().equals(password)) {
+            String jsonUsers = new ObjectMapper().writeValueAsString(user);
+            response.setContentType("application/json;charset=UTF-8");
+            try (PrintWriter out = response.getWriter()) {
+                out.println(jsonUsers);
+            }
+        } else{
+            user.setPassword("false");
+            String jsonUsers = new ObjectMapper().writeValueAsString(user);
+            response.setContentType("application/json;charset=UTF-8");
+            try (PrintWriter out = response.getWriter()) {
+                out.println(jsonUsers);
+            }
         }
-        
+
         //processRequest(request, response);
     }
 

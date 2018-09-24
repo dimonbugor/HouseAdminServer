@@ -17,7 +17,7 @@ import org.hibernate.Transaction;
  * @param <T>
  */
 public class DAO<T> implements DAOInterface<T>{
-
+    
     private T entity;
     
     private Session session;

@@ -5,6 +5,7 @@
  */
 package entitys;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -48,7 +49,9 @@ public class Category implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "category")
     private String category;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "category", fetch = FetchType.EAGER)
+    @JsonBackReference
     private Collection<Supplier> supplierCollection;
 
     public Category() {
