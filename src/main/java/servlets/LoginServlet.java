@@ -83,7 +83,9 @@ public class LoginServlet extends HttpServlet {
 
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-
+        
+        log(email);
+        log(password);
         //UserService userService = new UserService(new UserDAO());
         //List<User> listUsers = userService.findAll();
         Session session = getSessionFactory().openSession();
