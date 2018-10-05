@@ -5,19 +5,14 @@
  */
 package entitys;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
-import static javax.persistence.CascadeType.ALL;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import static javax.persistence.FetchType.EAGER;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -25,8 +20,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -34,7 +27,6 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "category_table")
-@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Category.findAll", query = "SELECT c FROM Category c")
     , @NamedQuery(name = "Category.findById", query = "SELECT c FROM Category c WHERE c.id = :id")
@@ -43,7 +35,7 @@ public class Category implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
@@ -52,9 +44,7 @@ public class Category implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "category")
     private String category;
-    
-    @OneToMany(cascade = ALL, mappedBy = "category", fetch = EAGER)
-    @JsonBackReference
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
     private Collection<Supplier> supplierCollection;
 
     public Category() {
@@ -85,7 +75,6 @@ public class Category implements Serializable {
         this.category = category;
     }
 
-    @XmlTransient
     public Collection<Supplier> getSupplierCollection() {
         return supplierCollection;
     }

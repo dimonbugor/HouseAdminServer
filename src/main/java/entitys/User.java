@@ -5,6 +5,7 @@
  */
 package entitys;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import javax.persistence.Basic;
@@ -12,7 +13,6 @@ import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import static javax.persistence.FetchType.EAGER;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -20,7 +20,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -28,7 +27,6 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "user_table")
-@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")
     , @NamedQuery(name = "User.findById", query = "SELECT u FROM User u WHERE u.userPK.id = :id")
@@ -64,14 +62,12 @@ public class User implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "last_name")
     private String lastName;
-    
     @JoinColumn(name = "apartment_table_id", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false, fetch = EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JsonManagedReference
     private Apartment apartment;
-    
     @JoinColumn(name = "rolle_table_id", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false, fetch = EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)   
     @JsonManagedReference
     private Rolle rolle;
 

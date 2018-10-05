@@ -41,3 +41,4 @@ entitys\QualityRating.class
 entitys\Apartment_.class
 entitys\Supplier.class
 entitys\Payments.class
+servlets\AllApartamentShowServlet.class

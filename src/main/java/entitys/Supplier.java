@@ -5,18 +5,13 @@
  */
 package entitys;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
-import static javax.persistence.CascadeType.ALL;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import static javax.persistence.FetchType.EAGER;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -25,8 +20,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -34,7 +27,6 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "supplier_table")
-@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Supplier.findAll", query = "SELECT s FROM Supplier s")
     , @NamedQuery(name = "Supplier.findById", query = "SELECT s FROM Supplier s WHERE s.supplierPK.id = :id")
@@ -62,24 +54,16 @@ public class Supplier implements Serializable {
     @Size(max = 45)
     @Column(name = "phone")
     private String phone;
-    
     @JoinColumn(name = "availablity_rating_table_id", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false, fetch = EAGER)
-    @JsonManagedReference
+    @ManyToOne(optional = false)
     private AvailablityRating availablityRating;
-    
     @JoinColumn(name = "category_table_id", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false, fetch = EAGER)
-    @JsonManagedReference
+    @ManyToOne(optional = false)
     private Category category;
-    
     @JoinColumn(name = "quality_rating_table_id", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false, fetch = EAGER)
-    @JsonManagedReference
+    @ManyToOne(optional = false)
     private QualityRating qualityRating;
-    
-    @OneToMany(cascade = ALL, mappedBy = "supplier", fetch = EAGER)
-    @JsonBackReference
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "supplier")
     private Collection<Payments> paymentsCollection;
 
     public Supplier() {
@@ -155,7 +139,6 @@ public class Supplier implements Serializable {
         this.qualityRating = qualityRating;
     }
 
-    @XmlTransient
     public Collection<Payments> getPaymentsCollection() {
         return paymentsCollection;
     }

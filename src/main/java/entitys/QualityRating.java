@@ -5,27 +5,20 @@
  */
 package entitys;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
-import static javax.persistence.CascadeType.ALL;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import static javax.persistence.FetchType.EAGER;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -33,7 +26,6 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "quality_rating_table")
-@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "QualityRating.findAll", query = "SELECT q FROM QualityRating q")
     , @NamedQuery(name = "QualityRating.findById", query = "SELECT q FROM QualityRating q WHERE q.id = :id")
@@ -42,7 +34,7 @@ public class QualityRating implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
@@ -50,9 +42,7 @@ public class QualityRating implements Serializable {
     @NotNull
     @Column(name = "rating")
     private int rating;
-    
-    @OneToMany(cascade = ALL, mappedBy = "qualityRating", fetch = EAGER)
-    @JsonBackReference
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "qualityRating")
     private Collection<Supplier> supplierCollection;
 
     public QualityRating() {
@@ -83,7 +73,6 @@ public class QualityRating implements Serializable {
         this.rating = rating;
     }
 
-    @XmlTransient
     public Collection<Supplier> getSupplierCollection() {
         return supplierCollection;
     }

@@ -10,14 +10,10 @@ import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
-import static javax.persistence.CascadeType.ALL;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import static javax.persistence.FetchType.EAGER;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -25,8 +21,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -34,7 +28,6 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "rolle_table")
-@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Rolle.findAll", query = "SELECT r FROM Rolle r")
     , @NamedQuery(name = "Rolle.findById", query = "SELECT r FROM Rolle r WHERE r.id = :id")
@@ -44,7 +37,7 @@ public class Rolle implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
@@ -57,8 +50,7 @@ public class Rolle implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "rolle_title")
     private String rolleTitle;
-    
-    @OneToMany(cascade = ALL, mappedBy = "rolle", fetch = EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "rolle")
     @JsonBackReference
     private Collection<User> userCollection;
 
@@ -99,7 +91,6 @@ public class Rolle implements Serializable {
         this.rolleTitle = rolleTitle;
     }
 
-    @XmlTransient
     public Collection<User> getUserCollection() {
         return userCollection;
     }

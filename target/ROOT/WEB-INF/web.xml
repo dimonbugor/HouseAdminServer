@@ -9,6 +9,10 @@
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>servlets.LoginServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AllApartamentShowServlet</servlet-name>
+        <servlet-class>servlets.AllApartamentShowServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>/faces/*</url-pattern>
@@ -20,6 +24,10 @@
     <!--<welcome-file-list>
         <welcome-file>faces/index.xhtml</welcome-file>
     </welcome-file-list>-->
+    <servlet-mapping>
+        <servlet-name>AllApartamentShowServlet</servlet-name>
+        <url-pattern>/allapartshow</url-pattern>
+    </servlet-mapping>
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>

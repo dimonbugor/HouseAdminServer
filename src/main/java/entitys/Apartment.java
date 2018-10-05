@@ -6,26 +6,21 @@
 package entitys;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
-import static javax.persistence.CascadeType.ALL;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import static javax.persistence.FetchType.EAGER;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -33,7 +28,6 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "apartment_table")
-@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Apartment.findAll", query = "SELECT a FROM Apartment a")
     , @NamedQuery(name = "Apartment.findById", query = "SELECT a FROM Apartment a WHERE a.id = :id")
@@ -42,7 +36,7 @@ public class Apartment implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
@@ -50,12 +44,10 @@ public class Apartment implements Serializable {
     @NotNull
     @Column(name = "apartment_number")
     private int apartmentNumber;
-    
-    @OneToMany(cascade = ALL, mappedBy = "apartment", fetch = EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "apartment")
     @JsonBackReference
     private Collection<User> userCollection;
-    
-    @OneToMany(cascade = ALL, mappedBy = "apartment", fetch = EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "apartment")
     @JsonBackReference
     private Collection<Payments> paymentsCollection;
 
@@ -87,7 +79,6 @@ public class Apartment implements Serializable {
         this.apartmentNumber = apartmentNumber;
     }
 
-    @XmlTransient
     public Collection<User> getUserCollection() {
         return userCollection;
     }
@@ -96,7 +87,6 @@ public class Apartment implements Serializable {
         this.userCollection = userCollection;
     }
 
-    @XmlTransient
     public Collection<Payments> getPaymentsCollection() {
         return paymentsCollection;
     }

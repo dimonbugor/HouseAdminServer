@@ -14,7 +14,7 @@ import java.util.List;
  * @author anekr
  */
 public class RolleService extends Service<Rolle>{
-    
+
     public RolleService(DAO dao) {
         super(dao);
     }
@@ -25,18 +25,23 @@ public class RolleService extends Service<Rolle>{
     }
 
     @Override
-    public void delete(Class<Rolle> type, Integer id) {
-        super.delete(type, id); //To change body of generated methods, choose Tools | Templates.
+    public void deleteAll() {
+        super.deleteAll(); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<Rolle> findAll(Class<Rolle> type) {
-        return super.findAll(type); //To change body of generated methods, choose Tools | Templates.
+    public void delete(Integer id) {
+        super.delete(id); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Rolle findById(Class<Rolle> type, Integer id) {
-        return super.findById(type, id); //To change body of generated methods, choose Tools | Templates.
+    public List<Rolle> findAll() {
+        return super.findAll(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Rolle findById(Integer id) {
+        return super.findById(id); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -48,6 +53,6 @@ public class RolleService extends Service<Rolle>{
     public void add(Rolle entity) {
         super.add(entity); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     
 }

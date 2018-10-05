@@ -6,8 +6,14 @@
 package service;
 
 import dao.DAO;
+import entitys.Apartment;
 import entitys.Payments;
+import entitys.User;
+import static hibernate.HibernateUtil.getSessionFactory;
 import java.util.List;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 /**
  *
@@ -25,18 +31,23 @@ public class PaymentsService extends Service<Payments>{
     }
 
     @Override
-    public void delete(Class<Payments> type, Integer id) {
-        super.delete(type, id); //To change body of generated methods, choose Tools | Templates.
+    public void deleteAll() {
+        super.deleteAll(); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<Payments> findAll(Class<Payments> type) {
-        return super.findAll(type); //To change body of generated methods, choose Tools | Templates.
+    public void delete(Integer id) {
+        super.delete(id); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Payments findById(Class<Payments> type, Integer id) {
-        return super.findById(type, id); //To change body of generated methods, choose Tools | Templates.
+    public List<Payments> findAll() {
+        return super.findAll(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Payments findById(Integer id) {
+        return super.findById(id); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -47,6 +58,17 @@ public class PaymentsService extends Service<Payments>{
     @Override
     public void add(Payments entity) {
         super.add(entity); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public List<Payments> findAllByApartment(Apartment apartment) {
+        Session session = getSessionFactory().openSession();
+        Transaction tx = session.beginTransaction();
+        Query query = session.getNamedQuery("Payments.findByApartmentTableId");
+        query.setParameter("apartmentTableId", apartment.getId());
+        List<Payments> pays = query.list();
+        tx.commit();
+        session.close();
+        return pays;
     }
 
     

@@ -15,18 +15,23 @@ import java.util.List;
 public class SupplierDAO extends DAO<Supplier>{
 
     @Override
+    public void deleteAll() {
+        super.deleteAll(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
     public void delete(Supplier entity) {
         super.delete(entity); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<Supplier> findAll(Class<Supplier> type) {
-        return super.findAll(type); //To change body of generated methods, choose Tools | Templates.
+    public List<Supplier> findAll() {
+        return super.findAll(); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Supplier findById(Class<Supplier> type, int id) {
-        return super.findById(type, id); //To change body of generated methods, choose Tools | Templates.
+    public Supplier findById(Integer id) {
+        return super.findById(id); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -39,6 +44,4 @@ public class SupplierDAO extends DAO<Supplier>{
         super.add(entity); //To change body of generated methods, choose Tools | Templates.
     }
 
-    
-    
 }

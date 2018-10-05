@@ -7,7 +7,12 @@ package service;
 
 import dao.DAO;
 import entitys.Apartment;
+import entitys.User;
+import static hibernate.HibernateUtil.getSessionFactory;
 import java.util.List;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 /**
  *
@@ -25,18 +30,33 @@ public class ApartmentService extends Service<Apartment>{
     }
 
     @Override
-    public void delete(Class<Apartment> type, Integer id) {
-        super.delete(type, id); //To change body of generated methods, choose Tools | Templates.
+    public void deleteAll() {
+        super.deleteAll(); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<Apartment> findAll(Class<Apartment> type) {
-        return super.findAll(type); //To change body of generated methods, choose Tools | Templates.
+    public void delete(Integer id) {
+        super.delete(id); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Apartment findById(Class<Apartment> type, Integer id) {
-        return super.findById(type, id); //To change body of generated methods, choose Tools | Templates.
+    public List<Apartment> findAll() {
+        return super.findAll(); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public List<Apartment> findAllCriteria() {
+        Session session = getSessionFactory().openSession();
+        Transaction tx = session.beginTransaction();
+        Query query = session.getNamedQuery("Apartment.findAll");
+        List<Apartment> aparts = query.list();
+        tx.commit();
+        session.close();
+        return aparts;
+    }
+
+    @Override
+    public Apartment findById(Integer id) {
+        return super.findById(id); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -49,5 +69,5 @@ public class ApartmentService extends Service<Apartment>{
         super.add(entity); //To change body of generated methods, choose Tools | Templates.
     }
 
-        
+    
 }
