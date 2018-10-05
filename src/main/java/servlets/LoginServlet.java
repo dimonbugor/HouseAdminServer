@@ -41,8 +41,6 @@ public class LoginServlet extends HttpServlet {
         query.setParameter("email", email);
         User user;
         user = (User) query.uniqueResult();
-        tx.commit();
-        session.close();
         
         if(user == null){
             user = new User();
@@ -68,6 +66,8 @@ public class LoginServlet extends HttpServlet {
             }
         }
 
+        tx.commit();
+        session.close();
         //processRequest(request, response);
     }
 

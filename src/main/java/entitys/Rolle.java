@@ -6,12 +6,16 @@
 package entitys;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,6 +30,7 @@ import javax.validation.constraints.Size;
  *
  * @author anekr
  */
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Entity
 @Table(name = "rolle_table")
 @NamedQueries({
@@ -50,8 +55,8 @@ public class Rolle implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "rolle_title")
     private String rolleTitle;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "rolle")
-    @JsonBackReference
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "rolle")
+    @JsonIgnoreProperties("rolle")
     private Collection<User> userCollection;
 
     public Rolle() {

@@ -5,6 +5,7 @@
  */
 package entitys;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -43,6 +44,7 @@ public class AvailablityRating implements Serializable {
     @Column(name = "rating")
     private int rating;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "availablityRating")
+    @JsonIgnoreProperties("availablityRating")
     private Collection<Supplier> supplierCollection;
 
     public AvailablityRating() {

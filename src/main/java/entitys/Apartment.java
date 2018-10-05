@@ -6,19 +6,25 @@
 package entitys;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerator;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -26,12 +32,14 @@ import javax.validation.constraints.NotNull;
  *
  * @author anekr
  */
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Entity
 @Table(name = "apartment_table")
 @NamedQueries({
     @NamedQuery(name = "Apartment.findAll", query = "SELECT a FROM Apartment a")
     , @NamedQuery(name = "Apartment.findById", query = "SELECT a FROM Apartment a WHERE a.id = :id")
     , @NamedQuery(name = "Apartment.findByApartmentNumber", query = "SELECT a FROM Apartment a WHERE a.apartmentNumber = :apartmentNumber")})
+
 public class Apartment implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -44,11 +52,11 @@ public class Apartment implements Serializable {
     @NotNull
     @Column(name = "apartment_number")
     private int apartmentNumber;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "apartment")
-    @JsonBackReference
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "apartment")
+    @JsonIgnoreProperties("apartment")
     private Collection<User> userCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "apartment")
-    @JsonBackReference
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "apartment")
+    @JsonIgnoreProperties("apartment")
     private Collection<Payments> paymentsCollection;
 
     public Apartment() {

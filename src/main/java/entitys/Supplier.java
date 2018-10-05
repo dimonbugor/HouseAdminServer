@@ -5,6 +5,9 @@
  */
 package entitys;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -12,6 +15,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -25,6 +29,7 @@ import javax.validation.constraints.Size;
  *
  * @author anekr
  */
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
 @Entity
 @Table(name = "supplier_table")
 @NamedQueries({
@@ -61,9 +66,10 @@ public class Supplier implements Serializable {
     @ManyToOne(optional = false)
     private Category category;
     @JoinColumn(name = "quality_rating_table_id", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     private QualityRating qualityRating;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "supplier")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "supplier")
+    @JsonIgnoreProperties("supplier")
     private Collection<Payments> paymentsCollection;
 
     public Supplier() {

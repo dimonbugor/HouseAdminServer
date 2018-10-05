@@ -5,6 +5,7 @@
  */
 package entitys;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -45,6 +46,7 @@ public class Category implements Serializable {
     @Column(name = "category")
     private String category;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
+    @JsonIgnoreProperties("category")
     private Collection<Supplier> supplierCollection;
 
     public Category() {

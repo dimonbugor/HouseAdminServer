@@ -43,6 +43,7 @@ public class AllApartamentShowServlet extends HttpServlet {
         Session session = getSessionFactory().openSession();
         Criteria criteria = session.createCriteria(Apartment.class);
         List<Apartment> apartmentList = criteria.list();
+        String jsonUsers = new ObjectMapper().writeValueAsString(apartmentList);
         session.close();
 
         /*for (Apartment apartment : apartmentList) {
@@ -62,7 +63,7 @@ public class AllApartamentShowServlet extends HttpServlet {
             AllApartmentMap.put(apartment, pay);
 
         }*/
-        String jsonUsers = new ObjectMapper().writeValueAsString(apartmentList);
+        //String jsonUsers = new ObjectMapper().writeValueAsString(apartmentList);
         response.setContentType("application/json;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             out.println(jsonUsers);

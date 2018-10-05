@@ -6,7 +6,9 @@
 package entitys;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -36,6 +38,7 @@ import javax.validation.constraints.Size;
     , @NamedQuery(name = "User.findByLastName", query = "SELECT u FROM User u WHERE u.lastName = :lastName")
     , @NamedQuery(name = "User.findByApartmentTableId", query = "SELECT u FROM User u WHERE u.userPK.apartmentTableId = :apartmentTableId")
     , @NamedQuery(name = "User.findByRolleTableId", query = "SELECT u FROM User u WHERE u.userPK.rolleTableId = :rolleTableId")})
+
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -64,11 +67,9 @@ public class User implements Serializable {
     private String lastName;
     @JoinColumn(name = "apartment_table_id", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    @JsonManagedReference
     private Apartment apartment;
     @JoinColumn(name = "rolle_table_id", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)   
-    @JsonManagedReference
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Rolle rolle;
 
     public User() {
